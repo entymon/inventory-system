@@ -1,24 +1,51 @@
 import { NextFunction, Request, Response } from 'express';
+import { getRepository } from 'typeorm';
 
 import { Product } from 'orm/entities/products/Product';
-import { TBodyRequestProduct, TProduct } from 'orm/entities/products/types';
+import { SubProduct } from 'orm/entities/subProducts/SubProduct';
 import { CustomError } from 'utils/response/custom-error/CustomError';
 
 export const add = async (req: Request, res: Response, next: NextFunction) => {
-  const body = req.body as unknown as TBodyRequestProduct;
+  const { name, price, category, subproducts } = req.body; //as unknown as TProduct;
 
-  const newProduct: TProduct = {
-    ...req.body,
-    price: parseInt(req.body.price),
-  };
+  const productRepository = getRepository(Product);
 
   try {
-    const product = Product.create(newProduct);
-    await product.save();
+    let product = await productRepository.findOne({ where: { name } });
 
-    res.customSuccess(200, `Product was created successfully`, req.body);
+    if (product) {
+      const customError = new CustomError(400, 'General', 'Product already exists', [
+        `Name '${product.name}' already exists`,
+      ]);
+      return next(customError);
+    }
+
+    const newProduct = Product.create({
+      name,
+      price,
+      category,
+    });
+
+    product = await newProduct.save();
+
+    addSubProducts(product, subproducts);
+
+    res.customSuccess(200, `Product id: ${product.id} was created successfully`);
   } catch (err) {
     const customError = new CustomError(400, 'Raw', 'Error', null, err);
     return next(customError);
   }
+};
+
+const addSubProducts = (product: Product, subProducts: SubProduct[]): void => {
+  if (subProducts.length === 0) return;
+
+  subProducts.forEach((subProduct) => {
+    SubProduct.create({
+      name: subProduct.name,
+      barcode: subProduct.barcode,
+      total: subProduct.total,
+      product,
+    }).save();
+  });
 };

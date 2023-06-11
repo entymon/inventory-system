@@ -7,10 +7,20 @@ export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    nullable: false,
+    unique: true,
+  })
+  name: string;
+
+  @Column('numeric', {
+    nullable: false,
+  })
   price: number;
 
-  @Column()
+  @Column({
+    nullable: false,
+  })
   category: string;
 
   @OneToMany(() => SubProduct, (subProduct: SubProduct) => subProduct.product)

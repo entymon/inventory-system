@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "2c02b49a-ae1b-4a14-bc92-6726167e831d",
-		"name": "RESTful API Boilerplate",
+		"_postman_id": "b767ed08-7b0c-47ab-875f-8dffc3c7f78c",
+		"name": "RESTful API Inventory",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "188463"
 	},
@@ -55,11 +55,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/auth/login",
+							"raw": "{{baseUrl}}/{{version}}/auth/login",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"{{version}}",
 								"auth",
 								"login"
 							]
@@ -105,11 +106,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/register",
+							"raw": "{{baseUrl}}/{{version}}/auth/register",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"{{version}}",
+								"auth",
 								"register"
 							]
 						}
@@ -159,11 +162,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/change-password",
+							"raw": "{{baseUrl}}/{{version}}/auth/change-password",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"{{version}}",
+								"auth",
 								"change-password"
 							]
 						}
@@ -203,12 +208,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/va/misc/change-language",
+							"raw": "{{baseUrl}}/{{version}}/misc/change-language",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"va",
+								"{{version}}",
 								"misc",
 								"change-language"
 							]
@@ -252,11 +257,12 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users",
+							"raw": "{{baseUrl}}/{{version}}/users",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"{{version}}",
 								"users"
 							]
 						}
@@ -293,11 +299,12 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/3",
+							"raw": "{{baseUrl}}/{{version}}/users/3",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"{{version}}",
 								"users",
 								"3"
 							]
@@ -332,11 +339,12 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/9",
+							"raw": "{{baseUrl}}/{{version}}/users/9",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"{{version}}",
 								"users",
 								"9"
 							]
@@ -382,11 +390,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/5",
+							"raw": "{{baseUrl}}/{{version}}/users/5",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"{{version}}",
 								"users",
 								"5"
 							]

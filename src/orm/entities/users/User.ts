@@ -44,7 +44,7 @@ export class User {
   name: string;
 
   @Column({
-    default: 'STANDARD' as Role,
+    default: 'COUNTER' as Role,
     length: 30,
   })
   role: string;
@@ -67,13 +67,9 @@ export class User {
     this.language = language;
   }
 
-  @OneToOne(() => BarcodeScanner, (scanner) => scanner.id)
+  @OneToOne(() => BarcodeScanner)
   @JoinColumn()
   scanner: BarcodeScanner;
-
-  // @OneToOne(() => UserRole)
-  // @JoinColumn()
-  // role: UserRole;
 
   @OneToMany(() => CountPlan, (countPlan: CountPlan) => countPlan.owner)
   count_plans_owned: CountPlan[];

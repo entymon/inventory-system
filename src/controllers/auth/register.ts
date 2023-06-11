@@ -23,7 +23,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       const newUser = new User();
       newUser.email = email;
       newUser.password = password;
-      newUser.role = role ? ('ADMINISTRATOR' as Role) : ('STANDARD' as Role);
+      newUser.role = role ? ('ADMINISTRATOR' as Role) : ('COUNTER' as Role);
       newUser.hashPassword();
       await userRepository.save(newUser);
 

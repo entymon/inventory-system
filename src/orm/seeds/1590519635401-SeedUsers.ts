@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
 
-import { Role } from '../entities/users/types';
 import { User } from '../entities/users/User';
+import { Role } from '../entities/users/types';
 
 export class SeedUsers1590519635401 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -22,7 +22,7 @@ export class SeedUsers1590519635401 implements MigrationInterface {
     user.email = 'standard@standard.com';
     user.password = 'pass1';
     user.hashPassword();
-    user.role = 'STANDARD' as Role;
+    user.role = 'COUNTER' as Role;
     await userRepository.save(user);
 
     user = new User();

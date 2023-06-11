@@ -1,34 +1,9 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class AddNewEntities1686482891874 implements MigrationInterface {
-    name = 'AddNewEntities1686482891874'
+export class AddNewTables1686508178078 implements MigrationInterface {
+    name = 'AddNewTables1686508178078'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
-            CREATE TABLE "products" (
-                "id" SERIAL NOT NULL,
-                "price" integer NOT NULL,
-                "category" character varying NOT NULL,
-                CONSTRAINT "PK_0806c755e0aca124e67c0cf6d7d" PRIMARY KEY ("id")
-            )
-        `);
-        await queryRunner.query(`
-            CREATE TABLE "subProducts" (
-                "id" SERIAL NOT NULL,
-                "name" character varying NOT NULL,
-                "total" integer NOT NULL,
-                "product_id" integer,
-                CONSTRAINT "PK_00acc9b09eadcea05c6c12c2d3c" PRIMARY KEY ("id")
-            )
-        `);
-        await queryRunner.query(`
-            CREATE TABLE "barcodes" (
-                "id" SERIAL NOT NULL,
-                "code" character varying NOT NULL,
-                "subproduct_id" integer,
-                CONSTRAINT "PK_96abb033220d041003ad937f587" PRIMARY KEY ("id")
-            )
-        `);
         await queryRunner.query(`
             CREATE TABLE "repetition_schedules" (
                 "id" SERIAL NOT NULL,
@@ -74,11 +49,24 @@ export class AddNewEntities1686482891874 implements MigrationInterface {
             )
         `);
         await queryRunner.query(`
-            CREATE TABLE "user_roles" (
+            CREATE TABLE "products" (
                 "id" SERIAL NOT NULL,
-                "role" character varying NOT NULL,
-                CONSTRAINT "UQ_0475850442d60bd704c58041551" UNIQUE ("role"),
-                CONSTRAINT "PK_8acd5cf26ebd158416f477de799" PRIMARY KEY ("id")
+                "name" character varying NOT NULL,
+                "price" numeric NOT NULL,
+                "category" character varying NOT NULL,
+                CONSTRAINT "UQ_4c9fb58de893725258746385e16" UNIQUE ("name"),
+                CONSTRAINT "PK_0806c755e0aca124e67c0cf6d7d" PRIMARY KEY ("id")
+            )
+        `);
+        await queryRunner.query(`
+            CREATE TABLE "subProducts" (
+                "id" SERIAL NOT NULL,
+                "name" character varying NOT NULL,
+                "barcode" character varying NOT NULL,
+                "total" integer NOT NULL,
+                "product_id" integer,
+                CONSTRAINT "UQ_246fcdec15a63ec2097a06b4ff2" UNIQUE ("name"),
+                CONSTRAINT "PK_00acc9b09eadcea05c6c12c2d3c" PRIMARY KEY ("id")
             )
         `);
         await queryRunner.query(`
@@ -177,14 +165,6 @@ export class AddNewEntities1686482891874 implements MigrationInterface {
             ADD "name" character varying
         `);
         await queryRunner.query(`
-            ALTER TABLE "subProducts"
-            ADD CONSTRAINT "FK_ddcbe93685a30735c3be5b39f82" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "barcodes"
-            ADD CONSTRAINT "FK_8ce5796461f381c59b0d11ee2d8" FOREIGN KEY ("subproduct_id") REFERENCES "subProducts"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-        `);
-        await queryRunner.query(`
             ALTER TABLE "repetition_schedules"
             ADD CONSTRAINT "FK_004ab5dd25108407297396bc39f" FOREIGN KEY ("count_plan_id") REFERENCES "count_plans"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
@@ -203,6 +183,10 @@ export class AddNewEntities1686482891874 implements MigrationInterface {
         await queryRunner.query(`
             ALTER TABLE "count_executions"
             ADD CONSTRAINT "FK_0e5c74728133f48a03b1f4c7002" FOREIGN KEY ("status_id") REFERENCES "count_statuses"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+        `);
+        await queryRunner.query(`
+            ALTER TABLE "subProducts"
+            ADD CONSTRAINT "FK_ddcbe93685a30735c3be5b39f82" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
         await queryRunner.query(`
             ALTER TABLE "users_count_plans_assigned_count_plans"
@@ -264,6 +248,9 @@ export class AddNewEntities1686482891874 implements MigrationInterface {
             ALTER TABLE "users_count_plans_assigned_count_plans" DROP CONSTRAINT "FK_28c2dc33f0254014ea960fce4d5"
         `);
         await queryRunner.query(`
+            ALTER TABLE "subProducts" DROP CONSTRAINT "FK_ddcbe93685a30735c3be5b39f82"
+        `);
+        await queryRunner.query(`
             ALTER TABLE "count_executions" DROP CONSTRAINT "FK_0e5c74728133f48a03b1f4c7002"
         `);
         await queryRunner.query(`
@@ -277,12 +264,6 @@ export class AddNewEntities1686482891874 implements MigrationInterface {
         `);
         await queryRunner.query(`
             ALTER TABLE "repetition_schedules" DROP CONSTRAINT "FK_004ab5dd25108407297396bc39f"
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "barcodes" DROP CONSTRAINT "FK_8ce5796461f381c59b0d11ee2d8"
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "subProducts" DROP CONSTRAINT "FK_ddcbe93685a30735c3be5b39f82"
         `);
         await queryRunner.query(`
             ALTER TABLE "users" DROP COLUMN "name"
@@ -362,7 +343,10 @@ export class AddNewEntities1686482891874 implements MigrationInterface {
             DROP TABLE "users_count_plans_assigned_count_plans"
         `);
         await queryRunner.query(`
-            DROP TABLE "user_roles"
+            DROP TABLE "subProducts"
+        `);
+        await queryRunner.query(`
+            DROP TABLE "products"
         `);
         await queryRunner.query(`
             DROP TABLE "count_executions"
@@ -378,15 +362,6 @@ export class AddNewEntities1686482891874 implements MigrationInterface {
         `);
         await queryRunner.query(`
             DROP TABLE "repetition_schedules"
-        `);
-        await queryRunner.query(`
-            DROP TABLE "barcodes"
-        `);
-        await queryRunner.query(`
-            DROP TABLE "subProducts"
-        `);
-        await queryRunner.query(`
-            DROP TABLE "products"
         `);
     }
 

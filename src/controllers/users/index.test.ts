@@ -1,7 +1,7 @@
-import 'mocha';
 import { expect } from 'chai';
+import 'mocha';
 import { agent as request } from 'supertest';
-import { getRepository, Connection, Repository } from 'typeorm';
+import { Connection, getRepository, Repository } from 'typeorm';
 
 import { dbCreateConnection } from 'orm/dbCreateConnection';
 import { Role } from 'orm/entities/users/types';
@@ -30,7 +30,7 @@ describe('Users', () => {
   standardUser.email = 'todd.alquist@test.com';
   standardUser.password = userPassword;
   standardUser.hashPassword();
-  standardUser.role = 'STANDARD' as Role;
+  standardUser.role = 'COUNTER' as Role;
 
   before(async () => {
     dbConnection = await dbCreateConnection();
@@ -64,7 +64,7 @@ describe('Users', () => {
       expect(res.body.errorMessage).to.equal('Unauthorized - Insufficient user rights');
       expect(res.body.errors).to.eql([
         'Unauthorized - Insufficient user rights',
-        'Current role: STANDARD. Required role: ADMINISTRATOR',
+        'Current role: COUNTER. Required role: ADMINISTRATOR',
       ]);
       expect(res.body.errorRaw).to.an('null');
       expect(res.body.errorsValidation).to.an('null');

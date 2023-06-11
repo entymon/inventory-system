@@ -1,23 +1,24 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Barcode } from '../barcodes/Barcode';
 import { Product } from '../products/Product';
 
 @Entity('subProducts')
-export class SubProduct {
+export class SubProduct extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    nullable: false,
+    unique: true,
+  })
   name: string;
 
-  @ManyToOne(() => Product, (product) => product.subproducts)
-  product: Product;
-
-  @OneToMany(() => Barcode, (barcode) => barcode.subproduct)
-  @JoinColumn()
-  barcodes: Barcode[];
+  @Column()
+  barcode: string;
 
   @Column()
   total: number;
+
+  @ManyToOne(() => Product, (product) => product.subproducts)
+  product: Product;
 }

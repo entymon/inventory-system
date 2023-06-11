@@ -7,6 +7,6 @@ export class BarcodeScanner {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => User, (user) => user.scanner)
+  @OneToOne(() => User)
   user: User;
 }
