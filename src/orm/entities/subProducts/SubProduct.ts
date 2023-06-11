@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Barcode } from '../Barcodes/Barcode';
+import { Barcode } from '../barcodes/Barcode';
 import { Product } from '../products/Product';
 
 @Entity('subProducts')

@@ -12,7 +12,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { BarcodeScanner } from '../BarcodeScanners/BarcodeScanner';
+import { BarcodeScanner } from '../barcodeScanners/BarcodeScanner';
 import { CountExecution } from '../countExecutions/CountExecution';
 import { CountPlan } from '../countPlans/CountPlan';
 
