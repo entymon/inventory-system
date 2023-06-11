@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  be_inventory:
+    container_name: 'be_inventory'
+    build: .
+    restart: always
+    volumes:
+      - .:/app/
+      - /app/node_modules
