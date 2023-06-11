@@ -69,3 +69,12 @@ Containers created:
 
 1. DB Client
 Used for this project https://dbeaver.io/download/ with easy installation.
+
+
+## RUN TEST app
+
+1. Upload postman collection.
+2. Select register user and be sure you are on {{baseUrl}}/v1/auth/register (send parameter 'role' with value == 1, to create an admin)
+3. Select login user and be sure you are on {{baseUrl}}/v1/auth/login - provide data from registration 
+4. Copy generated `Bearer code` and update environment variables
+5. For test run: {{baseUrl}}/v1/users - you should be able to see a list of registered users

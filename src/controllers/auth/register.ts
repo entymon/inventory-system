@@ -1,11 +1,12 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 
+import { Role } from 'orm/entities/users/types';
 import { User } from 'orm/entities/users/User';
 import { CustomError } from 'utils/response/custom-error/CustomError';
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
   const userRepository = getRepository(User);
   try {
@@ -22,6 +23,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       const newUser = new User();
       newUser.email = email;
       newUser.password = password;
+      newUser.role = role ? ('ADMINISTRATOR' as Role) : ('STANDARD' as Role);
       newUser.hashPassword();
       await userRepository.save(newUser);
 
