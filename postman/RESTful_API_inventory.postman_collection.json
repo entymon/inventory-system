@@ -9,7 +9,7 @@
       "name": "/auth",
       "item": [
         {
-          "name": "/login",
+          "name": "/auth/login",
           "event": [
             {
               "listen": "test",
@@ -63,7 +63,7 @@
           "response": []
         },
         {
-          "name": "/register",
+          "name": "/auth/register",
           "request": {
             "method": "POST",
             "header": [
@@ -108,7 +108,7 @@
           "response": []
         },
         {
-          "name": "/change-password",
+          "name": "/auth/change-password",
           "request": {
             "method": "POST",
             "header": [
@@ -164,7 +164,7 @@
       "name": "/misc",
       "item": [
         {
-          "name": "/change-language",
+          "name": "/misc/change-language",
           "request": {
             "method": "POST",
             "header": [
@@ -205,7 +205,7 @@
       "name": "/users",
       "item": [
         {
-          "name": "/",
+          "name": "/users/",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -242,7 +242,7 @@
           "response": []
         },
         {
-          "name": "/:id",
+          "name": "/users/:id",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -279,7 +279,7 @@
           "response": []
         },
         {
-          "name": "/:id",
+          "name": "/users/:id",
           "request": {
             "method": "DELETE",
             "header": [
@@ -313,7 +313,7 @@
           "response": []
         },
         {
-          "name": "/:id",
+          "name": "/users/:id",
           "request": {
             "method": "PATCH",
             "header": [
