@@ -1,7 +1,7 @@
 #  TypeORM / Express / TypeScript RESTful API
 
 based on @mkosir boilerplate: https://github.com/mkosir/typeorm-express-typescript:
-it's updated to node 18 version and extended by 
+it's updated to node 19 version
 
 [![CI][build-badge]][build-url]
 [![TypeScript][typescript-badge]][typescript-url]
@@ -64,3 +64,8 @@ Containers created:
 - Automated npm & Docker dependency updates with [Renovate](https://github.com/renovatebot/renovate) (set to patch version only)
 - Commit messages must meet [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) format.  
   After staging changes just run `npm run commit` and get instant feedback on your commit message formatting and be prompted for required fields by [Commitizen](https://github.com/commitizen/cz-cli)
+
+## Extras
+
+1. DB Client
+Used for this project https://dbeaver.io/download/ with easy installation.

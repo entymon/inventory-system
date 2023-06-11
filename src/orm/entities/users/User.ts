@@ -1,7 +1,22 @@
 import bcrypt from 'bcryptjs';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-import { Role, Language } from './types';
+import { BarcodeScanner } from '../BarcodeScanners/BarcodeScanner';
+import { CountExecution } from '../countExecutions/CountExecution';
+import { CountPlan } from '../countPlans/CountPlan';
+
+import { Language, Role } from './types';
 
 @Entity('users')
 export class User {
@@ -9,6 +24,7 @@ export class User {
   id: number;
 
   @Column({
+    nullable: true,
     unique: true,
   })
   email: string;
@@ -50,6 +66,25 @@ export class User {
   setLanguage(language: Language) {
     this.language = language;
   }
+
+  @OneToOne(() => BarcodeScanner, (scanner) => scanner.id)
+  @JoinColumn()
+  scanner: BarcodeScanner;
+
+  // @OneToOne(() => UserRole)
+  // @JoinColumn()
+  // role: UserRole;
+
+  @OneToMany(() => CountPlan, (countPlan: CountPlan) => countPlan.owner)
+  count_plans_owned: CountPlan[];
+
+  @ManyToMany(() => CountPlan)
+  @JoinTable()
+  count_plans_assigned: CountPlan[];
+
+  @ManyToMany(() => CountExecution)
+  @JoinTable()
+  count_executions: CountExecution[];
 
   hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8);
