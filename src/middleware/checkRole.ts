@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import { Role } from '../orm/entities/users/types';
 import { CustomError } from '../utils/response/custom-error/CustomError';
@@ -27,6 +27,8 @@ export const checkRole = (roles: Role[], isSelfAllowed = false) => {
       const customError = new CustomError(401, 'Unauthorized', 'Unauthorized - Insufficient user rights', errors);
       return next(customError);
     }
+
+    req.body.userId = req.jwtPayload.id;
     return next();
   };
 };

@@ -1,31 +1,31 @@
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { CountPlan } from '../countPlans/CountPlan';
-import { CountStatus } from '../countStatuses/CountStatus';
 import { User } from '../users/User';
 
+import { CountExecutionStatusEnum } from './types';
+
 @Entity('count_executions')
-export class CountExecution {
+export class CountExecution extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => CountPlan, (countPlan) => countPlan.count_executions)
   count_plan: CountPlan;
 
-  @OneToOne(() => CountStatus)
-  @JoinColumn()
-  status: CountStatus;
+  // It should be dictionary for normalization. Was removed to simplify the code
+  @Column()
+  status: CountExecutionStatusEnum;
 
   @Column()
   @CreateDateColumn()

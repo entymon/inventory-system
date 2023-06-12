@@ -2,11 +2,13 @@ import { NextFunction, Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 
 import { Product } from 'orm/entities/products/Product';
+import { TProduct } from 'orm/entities/products/types';
 import { SubProduct } from 'orm/entities/subProducts/SubProduct';
+import { TSubProduct } from 'orm/entities/subProducts/types';
 import { CustomError } from 'utils/response/custom-error/CustomError';
 
 export const add = async (req: Request, res: Response, next: NextFunction) => {
-  const { name, price, category, subproducts } = req.body; //as unknown as TProduct;
+  const { name, price, category, subproducts } = req.body as unknown as TProduct;
 
   const productRepository = getRepository(Product);
 
@@ -37,7 +39,7 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const addSubProducts = (product: Product, subProducts: SubProduct[]): void => {
+const addSubProducts = (product: Product, subProducts: TSubProduct[]): void => {
   if (subProducts.length === 0) return;
 
   subProducts.forEach((subProduct) => {

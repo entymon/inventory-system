@@ -3,19 +3,18 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from 'typeorm';
 
-import { BarcodeScanner } from '../barcodeScanners/BarcodeScanner';
 import { CountExecution } from '../countExecutions/CountExecution';
 import { CountPlan } from '../countPlans/CountPlan';
 
+import { BarcodeScanner } from '../BarcodeScanners/BarcodeScanner';
 import { Language, Role } from './types';
 
 @Entity('users')
@@ -68,8 +67,7 @@ export class User {
   }
 
   @OneToOne(() => BarcodeScanner)
-  @JoinColumn()
-  scanner: BarcodeScanner;
+  barcode_scanner: BarcodeScanner;
 
   @OneToMany(() => CountPlan, (countPlan: CountPlan) => countPlan.owner)
   count_plans_owned: CountPlan[];

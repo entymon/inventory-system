@@ -1,9 +1,17 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 import { CountPlan } from '../countPlans/CountPlan';
 
 @Entity('repetition_schedules')
-export class RepetitionSchedule {
+export class RepetitionSchedule extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
